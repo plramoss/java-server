@@ -1,7 +1,7 @@
 import java.io.*;
 import java.net.*;
 
-public class SimpleMLLPBasedTCPClient {
+public class Client {
   private static final char END_OF_BLOCK = '\u001c';
   private static final char START_OF_BLOCK = '\u000b';
   private static final char CARRIAGE_RETURN = 13;

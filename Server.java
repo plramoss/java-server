@@ -1,15 +1,13 @@
 import java.io.*;
 import java.net.*;
-import java.nio.charset.StandardCharsets;
 import java.util.*;
 
-public class MLLPBasedHL7ThreadedServer {
+public class Server {
 
   private int maxConnections;
   private int listenPort;
 
-
-  public MLLPBasedHL7ThreadedServer(int aListenPort, int maxConnections) {
+  public Server(int aListenPort, int maxConnections) {
     listenPort = aListenPort;
     this.maxConnections = maxConnections;
   }
@@ -34,7 +32,7 @@ public class MLLPBasedHL7ThreadedServer {
   }
 
   public static void main(String[] args) {
-    MLLPBasedHL7ThreadedServer server = new MLLPBasedHL7ThreadedServer(1080, 3);
+    Server server = new Server(1080, 3);
     server.setUpConnectionHandlers();
     server.acceptConnections();
   }
@@ -48,6 +46,8 @@ public class MLLPBasedHL7ThreadedServer {
       handlerThread.start();
     }
   }
+
+
 
   private static class ConnectionHandler implements Runnable {
     private static final int MESSAGE_CONTROL_ID_LOCATION = 9;
@@ -72,6 +72,7 @@ public class MLLPBasedHL7ThreadedServer {
         OutputStream out = connection.getOutputStream();
 
         String parsedHL7Message = getMessage(in);
+
         System.out.print(parsedHL7Message);
         String buildAcknowledgmentMessage = getSimpleAcknowledgementMessage(parsedHL7Message);
         out.write(buildAcknowledgmentMessage.getBytes(), 0, buildAcknowledgmentMessage.length());
