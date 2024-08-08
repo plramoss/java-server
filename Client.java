@@ -28,11 +28,16 @@ public class Client {
       .append(END_OF_BLOCK)
       .append(CARRIAGE_RETURN);
 
+    String nonHL7Message = "R|202407250004|15|NT-proBNP|0.300|22.000|0.440|0.000|<0.30|ng/ml|Neg(-)|20240725162107|0|0|4ee046e6c5fb0020|1234";
+
     InputStream in = socket.getInputStream();
     OutputStream out = socket.getOutputStream();
 
     // Send the MLLP-wrapped HL7 message to the server
-    out.write(testHL7MessageToTransmit.toString().getBytes());
+//    out.write(testHL7MessageToTransmit.toString().getBytes());
+
+    // Send the non-HL7 message to the server
+    out.write(nonHL7Message.getBytes());
 
     byte[] byteBuffer = new byte[200];
     in.read(byteBuffer);
